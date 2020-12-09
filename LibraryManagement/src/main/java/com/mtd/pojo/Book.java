@@ -6,6 +6,7 @@
 package com.mtd.pojo;
 
 import com.mtd.pojo.Author;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,14 +16,18 @@ import java.util.List;
  */
 
 public class Book {
-    enum Category {
+    public static enum Category {
         VANHOC("Văn học"), KINHTE("Kinh tế"), KYNANG("Kỹ năng"), THIEUNHI("Thiếu nhi"),
-        NGOAINGU("Ngoại ngữ"), KYTHUAT("Kỹ thuật");
+        NGOAINGU("Ngoại ngữ"), KYTHUAT("Kỹ thuật"), TIEUTHUYET("Tiểu thuyết");
         
         private String value;
         
         private Category(String value) {
             this.value = value;
+            
+        }
+        public String getValue() {
+            return value;
         }
     
 }
@@ -36,12 +41,52 @@ public class Book {
     private Date entryDate = null;
     private String bookPosition = null;
 
-    public Book(int bookID, String bookName, String category) {
-        this.bookID = bookID;
+    public Book (){}
+    
+//    public Book(String bookName, String category) {
+//        this.bookName = bookName;
+//        this.category = category;  
+//    }
+//    
+//    public Book(int bookID, String bookName, String category) {
+//        super(); 
+//    }
+//    
+    public Book(String bookName, String category, 
+            String description, Date publishYear, String publishCompany, 
+            Date entryDate, String bookPosition) {
         this.bookName = bookName;
-        this.category = category;  
+        this.category = category;
+        this.description = description;
+        this.publishYear = publishYear;
+        this.publishCompany = publishCompany;
+        this.entryDate = entryDate;
+        this.bookPosition = bookPosition;
     }
     
+    public Book(int bookID,String bookName, String category, 
+            String description, Date publishYear, String publishCompany, 
+            Date entryDate, String bookPosition) {
+        super();
+        this.bookID = bookID;
+    }
+    
+    
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        StringBuilder str = new StringBuilder();
+        str.append(String.format(" - ID: %d", this.getBookID()));
+        str.append(String.format(" - Name: %s", this.getBookName()));
+        str.append(String.format(" - Category: %s", this.getCategory()));
+        str.append(String.format(" - Description: %s", this.getDescription()));
+        str.append(String.format(" - Publish year: %s", dateFormat.format(this.getPublishYear())));
+        str.append(String.format(" - Publish company: %s", this.getPublishCompany()));
+        str.append(String.format(" - Entry date: %s", dateFormat.format(this.getEntryDate())));
+        str.append(String.format(" - Book position: %s", this.getBookPosition()));
+        return str.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * @return the bookID
      */
@@ -71,6 +116,20 @@ public class Book {
     }
 
     /**
+     * @return the category
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    /**
      * @return the authors
      */
     public List<Author> getAuthors() {
@@ -82,6 +141,20 @@ public class Book {
      */
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
@@ -138,44 +211,6 @@ public class Book {
      */
     public void setBookPosition(String bookPosition) {
         this.bookPosition = bookPosition;
-    }
-
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the category
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append(String.format(" - ID: %d", this.getBookID()));
-        str.append(String.format(" - Name: %s", this.getBookName()));
-        str.append(String.format(" - Category: %s", this.getCategory()));
-        
-        return str.toString(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
